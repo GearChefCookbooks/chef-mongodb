@@ -11,6 +11,8 @@ class Chef::ResourceDefinitionList::ReplicaHelper
 
   # create array of node objects for replica set
   def self.replicaset_members(node)
+    
+    replica_name = nil
 
     begin
        instances = self.read_replica_yml(node)
@@ -25,6 +27,17 @@ class Chef::ResourceDefinitionList::ReplicaHelper
       priority -= 5
       member = Chef::Node.new
       member.name(name)
+      new_replica_name = instance["cluster"]+"_"+instance["instance"]
+
+      if replica_name.nil?
+        replica_name = new_replica_name
+      else:
+        if replica_name != new_replica_name
+          Chef::Log.error "This name has a different cluster name than the prior node"
+          exit 1
+        end
+      end
+
       member.default['fqdn'] = instance["ipaddresses"]["private"]
       member.default['ipaddress'] = instance["ipaddresses"]["private"]
       member.default['hostname'] = name
@@ -46,7 +59,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     #We want at least 1 node to create a replicaset or a basis for a replicaset
     members.empty? ? replicaset = false : replicaset = true
 
-    return relicaset,members
+    return relicaset,replica_name,members
 
   end
 

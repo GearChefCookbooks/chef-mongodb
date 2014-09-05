@@ -23,17 +23,15 @@ include_recipe "mongodb::mongo_gem"
 #node.set['mongodb']['is_replicaset'] = true
 #node.set['mongodb']['cluster_name'] = node['mongodb']['cluster_name']
 
-mongodb_cluster_name = node['mongodb']['cluster_name']
-
 unless node['mongodb']['is_shard']
 
   Chef::Log.info "Configuring replicaset with mongo nodes specified in yml file ..."
 
   #Making a libary call to read yml file and see if there are any members
-  replicaset,members = Chef::ResourceDefinitionList::ReplicaHelper.replicaset_members(node)
+  replicaset,replica_name,members = Chef::ResourceDefinitionList::ReplicaHelper.replicaset_members(node)
 
   if replicaset
-     Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,mongodb_cluster_name,members)
+     Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,replica_name,members)
   else
      Chef::Log.warn "No nodes found for a replica set ..."
   end
