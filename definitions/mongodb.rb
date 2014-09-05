@@ -20,14 +20,13 @@
 #
 
 define :mongodb_instance,
-       :mongodb_type       => 'mongod',
-       :action             => [:enable, :start],
-       :logpath            => '/var/log/mongodb/mongodb.log',
-       :dbpath             => '/data',
-       :configservers      => [],
-       :replicaset         => nil,
-       :replicaset_name    => "default",
-       :notifies           => [] do
+       :mongodb_type  => 'mongod',
+       :action        => [:enable, :start],
+       :logpath       => '/var/log/mongodb/mongodb.log',
+       :dbpath        => '/data',
+       :configservers => [],
+       :replicaset    => nil,
+       :notifies      => [] do
 
   # TODO: this is the only remain use of params[:mongodb_type], is it still needed?
   unless %w(mongod shard configserver mongos).include?(params[:mongodb_type])
@@ -61,7 +60,6 @@ define :mongodb_instance,
   new_resource.replicaset                 = params[:replicaset]
   new_resource.service_action             = params[:action]
   new_resource.service_notifies           = params[:notifies]
-  new_resource.replicaset_name            = params[:replicaset_name]
 
   # TODO(jh): parameterize so we can make a resource provider
   new_resource.auto_configure_replicaset  = node['mongodb']['auto_configure']['replicaset']
@@ -79,6 +77,7 @@ define :mongodb_instance,
   new_resource.is_mongos                  = node['mongodb']['is_mongos']
   new_resource.mongodb_group              = node['mongodb']['group']
   new_resource.mongodb_user               = node['mongodb']['user']
+  new_resource.replicaset_name            = node['mongodb']['config']['replSet']
   new_resource.port                       = node['mongodb']['config']['port']
   new_resource.root_group                 = node['mongodb']['root_group']
   new_resource.shard_name                 = node['mongodb']['shard_name']
