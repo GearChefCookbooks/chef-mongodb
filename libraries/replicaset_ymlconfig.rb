@@ -31,7 +31,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
 
       if replica_name.nil?
         replica_name = new_replica_name
-      else:
+      else
         if replica_name != new_replica_name
           Chef::Log.error "This name has a different cluster name than the prior node"
           exit 1
