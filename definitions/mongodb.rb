@@ -74,7 +74,8 @@ define :mongodb_instance,
   new_resource.is_replicaset              = node['mongodb']['is_replicaset']
   new_resource.is_shard                   = node['mongodb']['is_shard']
   new_resource.is_configserver            = node['mongodb']['is_configserver']
-  new_resource.is_mongos                  = node['mongodb']['is_mongos']
+  new_resource.is_mongos                  = true
+  #new_resource.is_mongos                  = node['mongodb']['is_mongos']
   new_resource.mongodb_group              = node['mongodb']['group']
   new_resource.mongodb_user               = node['mongodb']['user']
   new_resource.replicaset_name            = node['mongodb']['config']['replSet']
