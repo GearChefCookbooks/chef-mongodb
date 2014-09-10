@@ -19,6 +19,10 @@ depends 'yum', '>= 3.0'
 depends 'python'
 depends 'runit', '>= 1.5.0'
 
+#In Berksfile 
+depends "ruby_build"
+depends "rvm", "0.9.1"
+
 %w(ubuntu debian centos redhat amazon).each do |os|
   supports os
 end
@@ -126,3 +130,5 @@ attribute 'mongodb/mms_agent/backup/version',
           :display_name => 'MMS Backup Agent version',
           :description => 'Version of MMS Backup Agent to install',
           :default => '1.4.3.28-1'
+
+
