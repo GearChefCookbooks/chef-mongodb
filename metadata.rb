@@ -19,10 +19,6 @@ depends 'yum', '>= 3.0'
 depends 'python'
 depends 'runit', '>= 1.5.0'
 
-#In Berksfile 
-depends "ruby_build"
-depends "rvm", "0.9.1"
-
 %w(ubuntu debian centos redhat amazon).each do |os|
   supports os
 end
