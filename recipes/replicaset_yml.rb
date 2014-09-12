@@ -18,7 +18,6 @@
 #
 
 include_recipe "mongodb"
-include_recipe "mongodb::install_ruby"
 include_recipe "mongodb::mongo_gem"
 
 #node.set['mongodb']['is_replicaset'] = true
