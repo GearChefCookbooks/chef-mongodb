@@ -55,9 +55,6 @@ class Chef::ResourceDefinitionList::ReplicaHelper
         'replica_votes' => 1
       }
       member.default['mongodb'] = mongodb_attributes
-
-      #Add the port
-      #member.default[:mongodb][:config][:port] = node['mongodb']['config']['port']
       members << member
 
     end
