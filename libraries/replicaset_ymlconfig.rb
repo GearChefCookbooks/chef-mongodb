@@ -57,6 +57,8 @@ class Chef::ResourceDefinitionList::ReplicaHelper
         'replica_tags' => {}, # to_hash is called on this
         'replica_votes' => 1
       }
+      puts 'yo1'
+      puts member[:mongodb][:config][:port] 
       member.default['mongodb'] = mongodb_attributes
       puts 'yo2'
       puts member[:mongodb][:config][:port] 
