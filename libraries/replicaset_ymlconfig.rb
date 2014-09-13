@@ -63,9 +63,8 @@ class Chef::ResourceDefinitionList::ReplicaHelper
       Chef::Log.info "#{member}"
     end
         
-    exit 1
-
-    return replicaset,replica_name,members
+    return false,replica_name,members
+    #return replicaset,replica_name,members
 
   end
 
