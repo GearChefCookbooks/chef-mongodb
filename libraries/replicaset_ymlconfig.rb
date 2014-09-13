@@ -59,6 +59,11 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     #We want at least 1 node to create a replicaset or a basis for a replicaset
     members.empty? ? replicaset = false : replicaset = true
 
+    members.each do |member|
+      Chef::Log.info "#{member}"
+        
+    exit
+
     return replicaset,replica_name,members
 
   end
