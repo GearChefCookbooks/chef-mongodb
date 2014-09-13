@@ -67,7 +67,6 @@ class Chef::ResourceDefinitionList::ReplicaHelper
       fqdn = member["fqdn"]
       #port = member["mongodb"]["config"]["port"] 
       puts fqdn
-      puts port
     end
         
     return false,replica_name,members
