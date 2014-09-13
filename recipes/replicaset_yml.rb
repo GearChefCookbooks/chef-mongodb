@@ -36,6 +36,11 @@ unless node['mongodb']['is_shard']
 
   if replicaset
      Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,replica_name,members)
+     execute "sleep 60" do
+       command "sleep 60"
+       action :run
+     end
+     Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,replica_name,members)
   else
      Chef::Log.warn "No nodes found for a replica set ..."
   end
