@@ -53,6 +53,8 @@ class Chef::ResourceDefinitionList::MongoDB
     rs_members = []
     rs_options = {}
     members.each_index do |n|
+
+      Chef::Log.info("Adding member: #{n}")
       host = "#{members[n]['fqdn']}:#{members[n]['mongodb']['config']['port']}"
       rs_options[host] = {}
       rs_options[host]['arbiterOnly'] = true if members[n]['mongodb']['replica_arbiter_only']
