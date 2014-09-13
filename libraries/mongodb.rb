@@ -56,7 +56,7 @@ class Chef::ResourceDefinitionList::MongoDB
 
       Chef::Log.info("Adding member: #{n}")
 
-      hostname = n.name
+      cnode = members[n]
 
       host = "#{members[n]['fqdn']}:#{members[n]['mongodb']['config']['port']}"
       rs_options[host] = {}
@@ -79,7 +79,7 @@ class Chef::ResourceDefinitionList::MongoDB
 
       #Adding more logging for what is being added
 
-      Chef::Log.info "mongodb parameters - host: #{host}, priority: #{priority}, votes: #{votes}, slave_delay: #{slave_delay}, tags: #{tags}"
+      Chef::Log.info "mongodb parameters - node: #{cnode}, host: #{host}, priority: #{priority}, votes: #{votes}, slave_delay: #{slave_delay}, tags: #{tags}"
 
     end
 
