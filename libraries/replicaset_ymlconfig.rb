@@ -66,8 +66,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
       puts fqdn
     end
         
-    return false,replica_name,members
-    #return replicaset,replica_name,members
+    return replicaset,replica_name,members
 
   end
 
