@@ -18,7 +18,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
        instances = self.read_replica_yml(node)
     rescue
        Chef::Log.warn "Cannot retrieve info from #{node["mongodb"]["config"]["replica_file"]}"
-       exit 0
+       exit 
     end
 
     priority = 500
