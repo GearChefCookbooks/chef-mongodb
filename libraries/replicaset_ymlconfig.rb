@@ -64,8 +64,16 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     #We want at least 1 node to create a replicaset or a basis for a replicaset
     members.empty? ? replicaset = false : replicaset = true
 
+    Chef::Log.info "hello"
+    puts members
+    members.each do |member|
+      fqdn = member["fqdn"]
+      puts fqdn
+      puts node['mongodb']['config']['port']
+      port = member["mongodb"]["config"]["port"] 
     end
         
+    return false,replica_name,members
     #return replicaset,replica_name,members
 
   end
