@@ -74,8 +74,8 @@ class Chef::ResourceDefinitionList::ReplicaHelper
       port = member["mongodb"]["config"]["port"] 
     end
         
-    return false,replica_name,members
-    #return replicaset,replica_name,members
+    #return false,replica_name,members
+    return replicaset,replica_name,members
 
   end
 
