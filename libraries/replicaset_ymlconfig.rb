@@ -65,7 +65,9 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     puts members
     members.each do |member|
       fqdn = member["fqdn"]
+      port = member['mongodb']['config']['port'] 
       puts fqdn
+      puts port
     end
         
     return replicaset,replica_name,members
