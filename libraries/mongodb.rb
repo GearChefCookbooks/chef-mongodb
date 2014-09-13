@@ -55,6 +55,9 @@ class Chef::ResourceDefinitionList::MongoDB
     members.each_index do |n|
 
       Chef::Log.info("Adding member: #{n}")
+
+      hostname = member[n]["hostname"]
+
       host = "#{members[n]['fqdn']}:#{members[n]['mongodb']['config']['port']}"
       rs_options[host] = {}
       rs_options[host]['arbiterOnly'] = true if members[n]['mongodb']['replica_arbiter_only']
@@ -73,6 +76,11 @@ class Chef::ResourceDefinitionList::MongoDB
       votes = members[n]['mongodb']['replica_votes']
       rs_options[host]['votes'] = votes unless votes == 1
       rs_members << { '_id' => n, 'host' => host }.merge(rs_options[host])
+
+      #Adding more logging for what is being added
+
+      Chef::Log.info "mongodb parameters - host: #{host}, priority: #{priority}, votes: #{votes}, slave_delay: #{slave_delay}, tags: #{tags}"
+
     end
 
     Chef::Log.info(
