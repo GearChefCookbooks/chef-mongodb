@@ -34,14 +34,12 @@ unless node['mongodb']['is_shard']
   Chef::Log.info "Replica name is #{replica_name} ... "
   Chef::Log.info "Replica members are #{members} ... "
 
+  if replicaset
+     Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,replica_name,members)
+  else
+     Chef::Log.warn "No nodes found for a replica set ..."
+  end
 
-#  if replicaset
-#     Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,replica_name,members)
-#  else
-#     Chef::Log.warn "No nodes found for a replica set ..."
-#  end
-#
-#        MongoDB.configure_replicaset(new_resource.replicaset, replicaset_name, rs_nodes) unless new_resource.replicaset.nil?
 end
 
 
