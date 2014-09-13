@@ -61,6 +61,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
 
     members.each do |member|
       Chef::Log.info "#{member}"
+    end
         
     exit
 
