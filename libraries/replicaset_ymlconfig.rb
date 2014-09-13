@@ -41,7 +41,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
       member.default['fqdn'] = instance["ipaddresses"]["private"]
       member.default['ipaddress'] = instance["ipaddresses"]["private"]
       member.default['hostname'] = name
-      member.default['mongodb']['config']['port'] = node['mongodb']['config']['port']
+      member.default[:mongodb][:config][:port] = node['mongodb']['config']['port']
 
       mongodb_attributes = {
         # here we could support a map of instances to custom replicaset options in the custom json
