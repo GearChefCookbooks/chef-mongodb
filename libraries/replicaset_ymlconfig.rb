@@ -59,7 +59,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     #We want at least 1 node to create a replicaset or a basis for a replicaset
     members.empty? ? replicaset = false : replicaset = true
 
-    return relicaset,replica_name,members
+    return replicaset,replica_name,members
 
   end
 
