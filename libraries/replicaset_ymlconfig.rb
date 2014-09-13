@@ -62,7 +62,8 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     Chef::Log.info "hello"
     puts members
     members.each do |member|
-      Chef::Log.info "#{member}"
+      fqdn = member["fqdn"]
+      puts fqdn
     end
         
     return false,replica_name,members
