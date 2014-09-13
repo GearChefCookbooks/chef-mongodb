@@ -56,7 +56,7 @@ class Chef::ResourceDefinitionList::MongoDB
 
       Chef::Log.info("Adding member: #{n}")
 
-      #hostname = member[n]["hostname"]
+      hostname = n.name
 
       host = "#{members[n]['fqdn']}:#{members[n]['mongodb']['config']['port']}"
       rs_options[host] = {}
