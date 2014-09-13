@@ -45,7 +45,6 @@ class Chef::ResourceDefinitionList::ReplicaHelper
       mongodb_attributes = {
         # here we could support a map of instances to custom replicaset options in the custom json
         'port' => node['mongodb']['port'],
-        'config' => { 'port' => node['mongodb']['port'] },
         'replica_arbiter_only' => false,
         'replica_build_indexes' => true,
         'replica_hidden' => false,
@@ -57,6 +56,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
       member.default['mongodb'] = mongodb_attributes
 
       #Add the port
+      member.default[:mongodb][:config][:port] = node['mongodb']['config']['port']
       members << member
 
     end
