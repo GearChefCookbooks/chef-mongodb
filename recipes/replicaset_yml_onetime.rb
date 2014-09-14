@@ -77,7 +77,7 @@ unless node['mongodb']['is_shard']
     end
 
     execute "initiate replication" do
-      command "ls -al"
+      command "cat /tmp/mongo_replicaset.js | /usr/bin/mongo localhost:27017"
       not_if "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
     end
 
