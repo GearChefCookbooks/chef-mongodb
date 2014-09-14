@@ -32,13 +32,25 @@ unless node['mongodb']['is_shard']
   Chef::Log.info "Replica members are #{members} ... "
 
   if replicaset 
+
+    mongos_replica = []
+    id = 0
     members.each do |member|
+      id += 1
       fqdn = member["fqdn"]
       hostname = member["hostname"]
       port = member["mongodb"]["config"]["port"] 
       replica_name = member["mongodb"]["replica_name"]
-      Chef::Log.info "mongodb replica_name: #{replica_name}, fqdn: #{fqdn}, port: #{port}"
+      Chef::Log.info "mongodb replica_name: #{replica_name}, id: #{id}, fqdn: #{fqdn}, port: #{port}"
+
+      replica = {}
+      replica[:ip]   = fqdn
+      replica[:port] = port
+      replica[:id]   = id
+      mongos_replica << replica
     end
+ 
+    puts mongos_replica
   else
      Chef::Log.warn "No nodes found for a replica set ..."
   end
