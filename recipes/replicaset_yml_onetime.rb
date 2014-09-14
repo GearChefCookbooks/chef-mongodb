@@ -51,6 +51,12 @@ unless node['mongodb']['is_shard']
     end
  
     puts mongos_replica
+
+    execute "initiate replication" do
+      command "ls -al"
+      not_if "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
+    end
+
   else
      Chef::Log.warn "No nodes found for a replica set ..."
   end
