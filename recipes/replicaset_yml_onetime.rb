@@ -51,6 +51,22 @@ unless node['mongodb']['is_shard']
     end
  
     puts mongos_replica
+    puts hostname
+    puts node[hostname
+
+    if node["hostname"] == hostname
+      template node[:mongodb][:dbconfig_file] do
+        source "mongodb.simple.repl.conf.erb"
+        mode 0644
+        owner "root"
+        group "root"
+        variables(
+          :replica_name => replica_name
+        )
+        notifies :stop, "service[mongodb]", :immediately
+        notifies :start, "service[mongodb]"
+      end
+    end
 
     execute "initiate replication" do
       command "ls -al"

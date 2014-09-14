@@ -20,7 +20,7 @@ replSet = <%= @replica_name %>
 <% end %>
 
 # Turn on rest API 
-<% if node[:mongodb][:config][:api] %>
+<% if !node[:mongodb][:config][:rest] %>
 rest = true
 <% end %>
 
@@ -47,7 +47,7 @@ quiet = true
 <% end %>
 
 #Enable journal explicitly
-<% if node[:mongodb][:config][:journal] %>
+<% if !node[:mongodb][:config][:nojournal] %>
 journal = true
 <% end %>
 
