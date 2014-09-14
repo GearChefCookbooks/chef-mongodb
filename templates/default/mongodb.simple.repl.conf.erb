@@ -1,35 +1,53 @@
+# Automatically generated through chef
 # mongodb.conf
+
 # http://www.mongodb.org/display/DOCS/File+Based+Configuration
 
-# Where to store the data.
-
-# Note: if you run mongodb as a non-root user (recommended) you may
-# need to create and set permissions for this directory manually,
-# e.g., if the parent directory isn't mutable by the mongodb user.
+# dbpath
 dbpath = <%= node['mongodb']['config']['dbpath'] %>
-# Where to log
+
+# logpath
 logpath = <%= node['mongodb']['config']['logpath'] %>
 
-# Whether the log file will be appended (true) or over-written (false)
-logappend = <%= node['mongodb']['config']['logappend'] %>
-# In replica set configuration, specify the name of the replica set
-replSet = dev
+# Whether the log file appended?
+<% if node[:mongodb][:config][:logappend] %>
+logappend = true
+<% end %>
 
-# Turn on simple rest API 
-rest = <%= node['mongodb']['config']['rest'] %>
+#If replica_name specified
+<% unless @replica_name.nil? %>
+replSet = <%= @replica_name %>
+<% end %>
+
+# Turn on rest API 
+<% if node[:mongodb][:config][:api] %>
+rest = true
+<% end %>
 
 # Enables periodic logging of CPU utilization and I/O wait
+<% if node[:mongodb][:config][:cpu] %>
 cpu = true
+<% end %>
 
-# Turn on/off security.  Off is currently the default
-# noauth = true
-# auth = true
+# Security on
+<% if node[:mongodb][:config][:auth] %>
+auth = true
+<% else %>
+noauth = true
+<% end %>
 
-# Verbose logging output (same as v = true) 
+# Verbose logging 
+<% if node[:mongodb][:config][:verbose] %>
+verbose = true
+<% end %>
 
-# Quiet logging output (same as v = true) 
+# Quiet logging 
+<% if node[:mongodb][:config][:quiet] %>
+quiet = true
+<% end %>
 
-# Whether writes will be journaled or not. This feature enables fast recovery
-# from crashes
+#Enable journal explicitly
+<% if node[:mongodb][:config][:journal] %>
 journal = true
+<% end %>
 

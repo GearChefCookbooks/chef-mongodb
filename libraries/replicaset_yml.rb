@@ -1,7 +1,10 @@
 require 'chef/node'
 require 'yaml'
+require 'chef/mixin/shell_out'
 
 class Chef::ResourceDefinitionList::ReplicaHelper
+
+  include Chef::Mixin::ShellOut
 
   def self.read_replica_yml(node)
     yaml_file = node["mongodb"]["config"]["replica_file"]
@@ -46,6 +49,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
         # here we could support a map of instances to custom replicaset options in the custom json
         'port' => node['mongodb']['port'],
         'config' => { 'port' => node['mongodb']['config']['port'] },
+        'replica_name' => replica_name,
         'replica_arbiter_only' => false,
         'replica_build_indexes' => true,
         'replica_hidden' => false,
@@ -72,6 +76,12 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     #return false,replica_name,members
         
     return replicaset,replica_name,members
+
+    def initialized?
+      cmd = shell_out "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
+      cmd.exitstatus != 0
+    end
+
 
   end
 
