@@ -49,12 +49,8 @@ unless node['mongodb']['is_shard']
       replica[:id]   = id
       mongos_replica << replica
  
-      Chef::Log.info "#{mongos_replica}"
-      Chef::Log.info "#{hostname}"
-      Chef::Log.info "#{node[hostname]}"
-
       if node["hostname"] == hostname
-        Chef::Log.info "#{node["hostname"]} == #{hostname}"
+        Chef::Log.info "mongod.conf changed for: #{node["hostname"]} == #{hostname}"
         template node[:mongodb][:dbconfig_file] do
           source "mongodb.simple.repl.conf.erb"
           mode 0644
