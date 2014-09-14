@@ -59,8 +59,7 @@ unless node['mongodb']['is_shard']
           variables(
             :replica_name => replica_name
           )
-          notifies :stop, "service[mongodb]", :immediately
-          notifies :start, "service[mongodb]"
+          notifies :restart, "service[mongodb]"
         end
       end
     end
@@ -77,7 +76,7 @@ unless node['mongodb']['is_shard']
     end
 
     execute "initiate replication" do
-      command "cat /tmp/mongo_replicaset.js | /usr/bin/mongo localhost:27017; sleep 300"
+      command "cat /tmp/mongo_replicaset.js | /usr/bin/mongo localhost:27017"
       not_if "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
     end
 
