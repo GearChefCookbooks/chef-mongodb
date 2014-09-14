@@ -49,20 +49,20 @@ unless node['mongodb']['is_shard']
       replica[:id]   = id
       mongos_replica << replica
  
-      if node["hostname"] == hostname
-        Chef::Log.info "mongod.conf changed for: #{node["hostname"]} == #{hostname}"
-        template node[:mongodb][:dbconfig_file] do
-          source "mongodb.simple.repl.conf.erb"
-          mode 0644
-          owner "root"
-          group "root"
-          variables(
-            :replica_name => replica_name
-          )
-          notifies :stop, "service[mongodb]", :immediately
-          notifies :start, "service[mongodb]"
-        end
-      end
+      #if node["hostname"] == hostname
+      #  Chef::Log.info "mongod.conf changed for: #{node["hostname"]} == #{hostname}"
+      #  template node[:mongodb][:dbconfig_file] do
+      #    source "mongodb.simple.repl.conf.erb"
+      #    mode 0644
+      #    owner "root"
+      #    group "root"
+      #    variables(
+      #      :replica_name => replica_name
+      #    )
+      #    notifies :stop, "service[mongodb]", :immediately
+      #    notifies :start, "service[mongodb]"
+      #  end
+      #end
     end
 
     execute "initiate replication" do
