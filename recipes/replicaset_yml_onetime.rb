@@ -32,16 +32,12 @@ unless node['mongodb']['is_shard']
   Chef::Log.info "Replica members are #{members} ... "
 
   if replicaset 
-    if Chef::ResourceDefinitionList::ReplicaHelper.initialized?
-       members.each do |member|
-         fqdn = member["fqdn"]
-         hostname = member["hostname"]
-         port = member["mongodb"]["config"]["port"] 
-         replica_name = member["mongodb"]["replica_name"]
-         Chef::Log.info "mongodb replica_name: #{replica_name}, fqdn: #{fqdn}, port: #{port}"
-       end
-    else 
-     Chef::Log.warn "Replica set already initialized. This recipe only does a one time initialized from empty nodes ..."
+    members.each do |member|
+      fqdn = member["fqdn"]
+      hostname = member["hostname"]
+      port = member["mongodb"]["config"]["port"] 
+      replica_name = member["mongodb"]["replica_name"]
+      Chef::Log.info "mongodb replica_name: #{replica_name}, fqdn: #{fqdn}, port: #{port}"
     end
   else
      Chef::Log.warn "No nodes found for a replica set ..."
