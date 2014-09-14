@@ -55,6 +55,7 @@ unless node['mongodb']['is_shard']
     puts node[hostname
 
     if node["hostname"] == hostname
+      Chef::Log.info "#{node["hostname"]} == #{hostname}"
       template node[:mongodb][:dbconfig_file] do
         source "mongodb.simple.repl.conf.erb"
         mode 0644
