@@ -32,7 +32,7 @@ unless node['mongodb']['is_shard']
   Chef::Log.info "Replica members are #{members} ... "
 
   if replicaset 
-    if !Chef::ResourceDefinitionList::ReplicaHelper.initialized?
+    if Chef::ResourceDefinitionList::ReplicaHelper.initialized?
        members.each do |member|
          fqdn = member["fqdn"]
          hostname = member["hostname"]
