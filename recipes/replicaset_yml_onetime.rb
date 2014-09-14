@@ -39,6 +39,7 @@ unless node['mongodb']['is_shard']
       id += 1
       fqdn = member["fqdn"]
       hostname = member["hostname"]
+      puts hostname
       port = member["mongodb"]["config"]["port"] 
       replica_name = member["mongodb"]["replica_name"]
       Chef::Log.info "mongodb replica_name: #{replica_name}, id: #{id}, fqdn: #{fqdn}, port: #{port}"
