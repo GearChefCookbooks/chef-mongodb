@@ -20,7 +20,7 @@ replSet = <%= @replica_name %>
 <% end %>
 
 # Turn on rest API 
-<% if !node[:mongodb][:config][:rest] %>
+<% if node[:mongodb][:config][:rest] %>
 rest = true
 <% end %>
 

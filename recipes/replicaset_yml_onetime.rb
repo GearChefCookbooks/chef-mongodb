@@ -65,6 +65,17 @@ unless node['mongodb']['is_shard']
       end
     end
 
+    template "/tmp/mongo_replicaset.js" do
+      source "mongo_replicaset.erb"
+      mode 0644
+      owner "root"
+      group "root"
+      variables(
+        :mongos_replica => mongos_replica,
+        :replica_name   => replica_name
+      )
+    end
+
     execute "initiate replication" do
       command "ls -al"
       not_if "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
