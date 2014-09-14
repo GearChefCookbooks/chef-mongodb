@@ -6,6 +6,12 @@ class Chef::ResourceDefinitionList::ReplicaHelper
 
   include Chef::Mixin::ShellOut
 
+  def initialized?
+    cmd = shell_out "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
+    cmd.exitstatus != 0
+  end
+
+
   def self.read_replica_yml(node)
     yaml_file = node["mongodb"]["config"]["replica_file"]
     raw_config = File.read(yaml_file)
@@ -76,12 +82,6 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     #return false,replica_name,members
         
     return replicaset,replica_name,members
-
-    def initialized?
-      cmd = shell_out "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
-      cmd.exitstatus != 0
-    end
-
 
   end
 
