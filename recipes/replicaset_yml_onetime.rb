@@ -27,7 +27,7 @@ unless node['mongodb']['is_shard']
   #Making a libary call to read yml file and see if there are any members
   replicaset,replica_name,members = Chef::ResourceDefinitionList::ReplicaHelper.replicaset_members(node)
 
-  Chef::Log.info "Node info is #{replicaset} ... "
+  Chef::Log.info "Replicaset is #{replicaset} ... "
   Chef::Log.info "Replica name is #{replica_name} ... "
   Chef::Log.info "Replica members are #{members} ... "
 
