@@ -76,11 +76,10 @@ unless node['mongodb']['is_shard']
       )
     end
 
-    execute "cat /tmp/mongo_replicaset.js | /usr/bin/mongo localhost:27017"
-    #execute "initiate replication" do
-    #  command "cat /tmp/mongo_replicaset.js | /usr/bin/mongo localhost:27017"
-    #  not_if "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
-    #end
+    execute "initiate replication" do
+      command "cat /tmp/mongo_replicaset.js | /usr/bin/mongo localhost:27017; sleep 300"
+      not_if "echo 'rs.status()' | mongo local | grep -q 'run rs.initiate'"
+    end
 
   else
      Chef::Log.warn "No nodes found for a replica set ..."
