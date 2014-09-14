@@ -39,7 +39,6 @@ unless node['mongodb']['is_shard']
       id += 1
       fqdn = member["fqdn"]
       hostname = member["hostname"]
-      puts hostname
       port = member["mongodb"]["config"]["port"] 
       replica_name = member["mongodb"]["replica_name"]
       Chef::Log.info "mongodb replica_name: #{replica_name}, id: #{id}, fqdn: #{fqdn}, port: #{port}"
@@ -49,24 +48,24 @@ unless node['mongodb']['is_shard']
       replica[:port] = port
       replica[:id]   = id
       mongos_replica << replica
-    end
  
-    Chef::Log.info "#{mongos_replica}"
-    Chef::Log.info "#{hostname}"
-    Chef::Log.info "#{node[hostname]}"
+      Chef::Log.info "#{mongos_replica}"
+      Chef::Log.info "#{hostname}"
+      Chef::Log.info "#{node[hostname]}"
 
-    if node["hostname"] == hostname
-      Chef::Log.info "#{node["hostname"]} == #{hostname}"
-      template node[:mongodb][:dbconfig_file] do
-        source "mongodb.simple.repl.conf.erb"
-        mode 0644
-        owner "root"
-        group "root"
-        variables(
-          :replica_name => replica_name
-        )
-        notifies :stop, "service[mongodb]", :immediately
-        notifies :start, "service[mongodb]"
+      if node["hostname"] == hostname
+        Chef::Log.info "#{node["hostname"]} == #{hostname}"
+        template node[:mongodb][:dbconfig_file] do
+          source "mongodb.simple.repl.conf.erb"
+          mode 0644
+          owner "root"
+          group "root"
+          variables(
+            :replica_name => replica_name
+          )
+          notifies :stop, "service[mongodb]", :immediately
+          notifies :start, "service[mongodb]"
+        end
       end
     end
 
