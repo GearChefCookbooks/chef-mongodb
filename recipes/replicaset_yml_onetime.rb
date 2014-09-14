@@ -50,9 +50,9 @@ unless node['mongodb']['is_shard']
       mongos_replica << replica
     end
  
-    puts mongos_replica
-    puts hostname
-    puts node[hostname
+    Chef::Log.info "#{mongos_replica}"
+    Chef::Log.info "#{hostname}"
+    Chef::Log.info "#{node[hostname]}"
 
     if node["hostname"] == hostname
       Chef::Log.info "#{node["hostname"]} == #{hostname}"
