@@ -35,6 +35,38 @@ unless node['mongodb']['is_shard']
   Chef::Log.info "Replica members are #{members} ... "
 
   if replicaset
+
+     mongos_replica = []
+     id = 0
+     members.each do |member|
+       id += 1
+       fqdn = member["fqdn"]
+       hostname = member["hostname"]
+       port = member["mongodb"]["config"]["port"] 
+       replica_name = member["mongodb"]["replica_name"]
+       Chef::Log.info "mongodb replica_name: #{replica_name}, id: #{id}, fqdn: #{fqdn}, port: #{port}"
+
+       replica = {}
+       replica[:ip]   = fqdn
+       replica[:port] = port
+       replica[:id]   = id
+       mongos_replica << replica
+ 
+       if node["hostname"] == hostname
+         Chef::Log.info "mongod.conf changed for: #{node["hostname"]} == #{hostname}"
+         template node[:mongodb][:dbconfig_file] do
+           source "mongodb.simple.repl.conf.erb"
+           mode 0644
+           owner "root"
+           group "root"
+           variables(
+             :replica_name => replica_name
+           )
+           notifies :restart, "service[mongodb]"
+         end
+       end
+     end
+
      Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,replica_name,members)
      execute "sleep 300" do
        command "sleep 300"
@@ -46,5 +78,4 @@ unless node['mongodb']['is_shard']
   end
 
 end
-
 
