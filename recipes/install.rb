@@ -67,12 +67,12 @@ puts packager_opts
 puts node[:mongodb][:package_name]
 puts node[:mongodb][:package_version]
 
-## install
-#package node[:mongodb][:package_name] do
-#  options packager_opts
-#  action :install
-#  version node[:mongodb][:package_version]
-#end
+# install
+package node[:mongodb][:package_name] do
+  options packager_opts
+  action :install
+  version node[:mongodb][:package_version]
+end
 #
 ## Create keyFile if specified
 #if node[:mongodb][:key_file_content]
