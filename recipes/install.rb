@@ -71,7 +71,7 @@ puts node[:mongodb][:package_version]
 %w{ server,
 client
 }.each do |name|
-  package node[:mongodb][:package_name]-name do
+  package "#{node[:mongodb][:package_name]}-#{name}" do
     options packager_opts
     action :install
     version node[:mongodb][:package_version]
