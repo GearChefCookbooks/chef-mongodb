@@ -78,6 +78,7 @@ puts node[:mongodb][:package_version]
 #  end
 #end
 
+puts node[:mongodb][:package_name]-server 
 package node[:mongodb][:package_name]-server do
   options packager_opts
   action :install
