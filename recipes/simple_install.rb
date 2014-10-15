@@ -62,7 +62,13 @@ else
   packager_opts = ''
 end
 
-package node[:mongodb][:package_name] do
+package "#{node[:mongodb][:package_name]}-server" do
+  options packager_opts
+  action :install
+  version node[:mongodb][:package_version]
+end
+
+package "#{node[:mongodb][:package_name]}-shell" do
   options packager_opts
   action :install
   version node[:mongodb][:package_version]
