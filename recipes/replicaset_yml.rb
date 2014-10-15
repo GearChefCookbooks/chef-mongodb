@@ -23,6 +23,11 @@ include_recipe "mongodb::mongo_gem"
 #node.set['mongodb']['is_replicaset'] = true
 #node.set['mongodb']['cluster_name'] = node['mongodb']['cluster_name']
 
+service "mongod" do
+  supports :restart => true, :reload => true
+  action [:enable, :start]
+end
+
 unless node['mongodb']['is_shard']
 
   Chef::Log.info "Configuring replicaset with mongo nodes specified in yml file ..."
@@ -68,8 +73,8 @@ unless node['mongodb']['is_shard']
      end
 
      Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,replica_name,members)
-     execute "sleep 300" do
-       command "sleep 300"
+     execute "sleep 120" do
+       command "sleep 120"
        action :run
      end
      Chef::ResourceDefinitionList::MongoDB.configure_replicaset(node,replica_name,members)

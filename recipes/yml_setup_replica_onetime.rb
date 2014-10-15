@@ -17,14 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe "mongodb"
-include_recipe "mongodb::mongo_gem"
-
-service "mongod" do
-  supports :restart => true, :reload => true
-  action [:enable, :start]
-end
-
 unless node['mongodb']['is_shard']
 
   Chef::Log.info "Configuring replicaset with mongo nodes specified in yml file ..."
@@ -54,19 +46,6 @@ unless node['mongodb']['is_shard']
       replica[:id]   = id
       mongos_replica << replica
  
-      if node["hostname"] == hostname
-        Chef::Log.info "mongod.conf changed for: #{node["hostname"]} == #{hostname}"
-        template node[:mongodb][:dbconfig_file] do
-          source "mongodb.simple.repl.conf.erb"
-          mode 0644
-          owner "root"
-          group "root"
-          variables(
-            :replica_name => replica_name
-          )
-          notifies :restart, "service[mongod]"
-        end
-      end
     end
 
     template "/tmp/mongo_replicaset.js" do
@@ -86,7 +65,9 @@ unless node['mongodb']['is_shard']
     end
 
   else
+
      Chef::Log.warn "No nodes found for a replica set ..."
+
   end
 
 end
