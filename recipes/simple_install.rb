@@ -10,20 +10,20 @@ file node['mongodb']['sysconfig_file'] do
   action :create_if_missing
 end
 
-# just-in-case config file drop
-template node['mongodb']['dbconfig_file'] do
-  cookbook node['mongodb']['template_cookbook']
-  source node['mongodb']['dbconfig_file_template']
-  group node['mongodb']['root_group']
-  owner 'root'
-  mode 0644
-  variables(
-    :config => node['mongodb']['config']
-  )
-  helpers MongoDBConfigHelpers
-  action :create_if_missing
-end
-
+## just-in-case config file drop
+#template node['mongodb']['dbconfig_file'] do
+#  cookbook node['mongodb']['template_cookbook']
+#  source node['mongodb']['dbconfig_file_template']
+#  group node['mongodb']['root_group']
+#  owner 'root'
+#  mode 0644
+#  variables(
+#    :config => node['mongodb']['config']
+#  )
+#  helpers MongoDBConfigHelpers
+#  action :create_if_missing
+#end
+#
 # and we install our own init file
 if node['mongodb']['apt_repo'] == 'ubuntu-upstart'
   init_file = File.join(node['mongodb']['init_dir'], "#{node['mongodb']['default_init_name']}.conf")
