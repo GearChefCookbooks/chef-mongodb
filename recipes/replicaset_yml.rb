@@ -62,7 +62,7 @@ unless node['mongodb']['is_shard']
            variables(
              :replica_name => replica_name
            )
-           notifies :restart, "service[mongodb]"
+           notifies :restart, "service[mongod]"
          end
        end
      end
