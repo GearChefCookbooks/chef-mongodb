@@ -68,14 +68,26 @@ puts node[:mongodb][:package_name]
 puts node[:mongodb][:package_version]
 
 # install
-%w{ server,
-client
-}.each do |name|
-  package "#{node[:mongodb][:package_name]}-#{name}" do
-    options packager_opts
-    action :install
-    version node[:mongodb][:package_version]
-  end
+#%w{ server,
+#client
+#}.each do |name|
+#  package "#{node[:mongodb][:package_name]}-#{name}" do
+#    options packager_opts
+#    action :install
+#    version node[:mongodb][:package_version]
+#  end
+#end
+
+package node[:mongodb][:package_name]-server do
+  options packager_opts
+  action :install
+  version node[:mongodb][:package_version]
+end
+
+package node[:mongodb][:package_name]-client do
+  options packager_opts
+  action :install
+  version node[:mongodb][:package_version]
 end
 
 # Create keyFile if specified
