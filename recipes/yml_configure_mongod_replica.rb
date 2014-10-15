@@ -20,7 +20,7 @@
 include_recipe "mongodb"
 include_recipe "mongodb::mongo_gem"
 
-service "mongod" do
+service node[:mongodb][:init_service_name] do
   supports :restart => true, :reload => true
   action [:enable, :start]
 end
@@ -47,7 +47,7 @@ unless node['mongodb']['is_shard']
         variables(
           :replica_name => replica_name
         )
-        notifies :restart, "service[mongod]"
+        notifies :restart, "service[#{node[:mongodb][:init_service_name]}]"
       end
 
   else
