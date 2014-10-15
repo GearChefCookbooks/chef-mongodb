@@ -85,7 +85,7 @@ package "#{node[:mongodb][:package_name]}-server" do
   version node[:mongodb][:package_version]
 end
 
-package node[:mongodb][:package_name]-client do
+package "#{node[:mongodb][:package_name]}-client" do
   options packager_opts
   action :install
   version node[:mongodb][:package_version]
