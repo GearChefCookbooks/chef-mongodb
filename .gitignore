@@ -6,3 +6,10 @@ Berksfile.lock
 Gemfile.lock
 
 metadata.json
+
+*.swp
+*.swn
+*.swm
+*.pyc
+
+
