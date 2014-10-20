@@ -52,7 +52,9 @@ unless node['mongodb']['is_shard']
 
   else
 
+     Chef::Log.warn "***********************************"
      Chef::Log.warn "No nodes found for a replica set ..."
+     Chef::Log.warn "***********************************"
 
   end
 
