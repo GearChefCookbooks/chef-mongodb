@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe "mongodb"
+#include_recipe "mongodb"
 include_recipe "mongodb::mongo_gem"
 
 service node[:mongodb][:init_service_name] do
