@@ -5,7 +5,7 @@ require 'chef/mixin/shell_out'
 class Chef::ResourceDefinitionList::ReplicaHelper
 
   def self.read_replica_yml(node)
-    yaml_file = node["mongodb"]["config"]["replica_file"]
+    yaml_file = node["shared"]["config"]["mongo_replica_file"]
     raw_config = File.read(yaml_file)
     instances = YAML.load(raw_config)
   end
@@ -18,7 +18,7 @@ class Chef::ResourceDefinitionList::ReplicaHelper
     begin
        instances = self.read_replica_yml(node)
     rescue
-       Chef::Log.warn "Cannot retrieve info from #{node["mongodb"]["config"]["replica_file"]}"
+       Chef::Log.warn "Cannot retrieve info from #{node["shared"]["config"]["mongo_replica_file"]}"
        instances = nil
     end
 
