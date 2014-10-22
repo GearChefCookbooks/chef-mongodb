@@ -25,6 +25,30 @@ service node[:mongodb][:init_service_name] do
   action [:enable, :start]
 end
 
+template "/etc/nagios3/configures-nagios.conf" do
+  # other parameters
+  notifies :run, "execute[test-nagios-config]", :immediately
+end
+
+and then the chef-client would immediately run the following:
+
+#Reboot server once after mongo replica setup
+#This was needed for lxc vms
+bash "reboot_once" do
+  user "root"
+  code <<-EOH
+    echo "#!/bin/bash" > /var/tmp/reboot_once.sh 
+    echo "rm -rf /etc/cron.d/reboot_once" >> /var/tmp/reboot_once.sh
+    echo "/sbin/reboot" >> /var/tmp/reboot_once.sh
+    chmod 700 /var/tmp/reboot_once.sh
+
+    echo "*/3 * * * * root /var/tmp/reboot_once.sh" > /etc/cron.d/reboot_once
+    service cron restart
+  EOH
+  action :nothing
+  not_if {File.exists?("/var/tmp/reboot_once.sh")}
+end
+
 unless node['mongodb']['is_shard']
 
   Chef::Log.info "Configuring replicaset with mongo nodes specified in yml file ..."
@@ -48,6 +72,7 @@ unless node['mongodb']['is_shard']
           :replica_name => replica_name
         )
         notifies :restart, "service[#{node[:mongodb][:init_service_name]}]"
+        notifies :run, "bash[reboot_once]"
       end
 
   else
