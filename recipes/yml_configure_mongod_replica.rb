@@ -38,7 +38,7 @@ unless node['mongodb']['is_shard']
 
   if replicaset 
 
-      Chef::Log.info "mongod.conf changed for: #{node["hostname"]} == #{hostname}"
+      #Chef::Log.info "mongod.conf changed for: #{node["hostname"]} == #{hostname}"
       template node[:mongodb][:dbconfig_file] do
         source "mongodb.simple.repl.conf.erb"
         mode 0644
