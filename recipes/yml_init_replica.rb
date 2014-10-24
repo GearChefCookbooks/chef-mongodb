@@ -69,7 +69,15 @@ unless node['mongodb']['is_shard']
 
      Chef::Log.warn "***********************************"
      Chef::Log.warn "No nodes found for a replica set ..."
+     Chef::Log.warn "File exit status set at 185 ..."
      Chef::Log.warn "***********************************"
+
+     file "/tmp/file_exit_status" do
+       content "185"
+       owner 'root'
+       group 'root'
+       mode '444'
+     end
 
   end
 
