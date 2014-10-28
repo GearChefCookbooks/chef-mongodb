@@ -25,13 +25,6 @@ service node[:mongodb][:init_service_name] do
   action [:enable, :start]
 end
 
-template "/etc/nagios3/configures-nagios.conf" do
-  # other parameters
-  notifies :run, "execute[test-nagios-config]", :immediately
-end
-
-and then the chef-client would immediately run the following:
-
 #Reboot server once after mongo replica setup
 #This was needed for lxc vms
 bash "reboot_once" do
