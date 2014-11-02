@@ -35,7 +35,7 @@ bash "reboot_once" do
     echo "/sbin/reboot" >> /var/tmp/reboot_once.sh
     chmod 700 /var/tmp/reboot_once.sh
 
-    echo "*/3 * * * * root /var/tmp/reboot_once.sh" > /etc/cron.d/reboot_once
+    echo "* * * * * root /var/tmp/reboot_once.sh" > /etc/cron.d/reboot_once
     service cron restart
   EOH
   action :nothing
