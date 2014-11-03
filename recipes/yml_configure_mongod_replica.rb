@@ -18,7 +18,7 @@
 #
 
 #include_recipe "mongodb"
-include_recipe "mongodb::mongo_gem"
+#include_recipe "mongodb::mongo_gem"
 
 service node[:mongodb][:init_service_name] do
   supports :restart => true, :reload => true
