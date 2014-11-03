@@ -1,7 +1,7 @@
 replica_config = {
   _id: "<%= @replica_name %>",
   members: [
-    <%= @mongos_replica.map {|m| "{_id: #{m[:id]}, host: \"#{m[:ip]}:#{m[:port]}\"}" }.join(',') %>
+    <%= @mongos_replica.map {|m| "{_id: #{m[:id]}, priority: #{m[:priority]},host: \"#{m[:ip]}:#{m[:port]}\"}" }.join(',') %>
   ]
 }
 
@@ -9,4 +9,5 @@ replica_config = {
 rs.initiate(replica_config);
 
 sleep(10000);
+
 

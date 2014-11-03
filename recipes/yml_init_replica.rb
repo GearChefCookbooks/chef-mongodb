@@ -28,15 +28,17 @@ unless node['mongodb']['is_shard']
   Chef::Log.info "Replica name is #{replica_name} ... "
   Chef::Log.info "Replica members are #{members} ... "
 
-  if replicaset 
+  if replicaset
 
     mongos_replica = []
     id = 0
+    priority = 500
     members.each do |member|
       id += 1
+      priority -= 5
       fqdn = member["fqdn"]
       hostname = member["hostname"]
-      port = member["mongodb"]["config"]["port"] 
+      port = member["mongodb"]["config"]["port"]
       replica_name = member["mongodb"]["replica_name"]
       Chef::Log.info "mongodb replica_name: #{replica_name}, id: #{id}, fqdn: #{fqdn}, port: #{port}"
 
@@ -44,8 +46,9 @@ unless node['mongodb']['is_shard']
       replica[:ip]   = fqdn
       replica[:port] = port
       replica[:id]   = id
+      replica[:priority]   = priority
       mongos_replica << replica
- 
+
     end
 
     template "/tmp/mongo_replicaset.js" do
