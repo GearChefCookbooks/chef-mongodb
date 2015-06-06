@@ -82,6 +82,8 @@ unless node['mongodb']['is_shard']
        mode '444'
      end
 
+     Chef::Application.fatal!("No nodes found from yml file")
+
   end
 
 end
