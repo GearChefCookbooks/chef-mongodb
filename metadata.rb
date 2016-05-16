@@ -128,3 +128,4 @@ attribute 'mongodb/mms_agent/backup/version',
           :default => '1.4.3.28-1'
 
 
+depends 'iptables', '= 1.1.0'
